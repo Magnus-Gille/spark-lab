@@ -114,8 +114,13 @@ till `hamta.sh` så att samma filer hämtas igen.
 | F | [google/embeddinggemma-2](https://huggingface.co/google/embeddinggemma-2) rev `914f7f89142e33e77833254d9c9b90c3cef7303b` | 1,5 GB | Apache-2.0 | `vllm/vllm-openai:cu134-nightly-81198e97…` (stödet är nyare än 0.31.0) | `recept/embeddinggemma-2.args` |
 
 F är en embeddingmodell (768 dimensioner, 8k tokens, flerspråkig, tränad för
-kodsökning) och körs som sidomodell `llm@embed` på port 8002 bredvid
-kodmodellen, cirka 0,5 GiB minne. Reserv om den nattliga bilden krånglar:
+kodsökning) tänkt som sidomodell `llm@embed` på port 8002 bredvid kodmodellen,
+cirka 0,5 GiB minne. **Status 2026-10-08: inte igång.** Tre försök på den
+nattliga bilden: Triton-attention kräver 160 kB delat minne per block (GB10 har
+99 kB), FlashInfer stöder inte encoder-only attention, och FlashAttention
+kraschade också (orsak i `journal-llm@embed.txt` i överlämningsmappen).
+Nästa steg: prova en senare nattlig bild eller `sentence-transformers` utanför
+vLLM; reserven `embeddinggemma-300m` kräver inloggning på Hugging Face. Reserv om den nattliga bilden krånglar:
 `google/embeddinggemma-300m` på den vanliga bilden (`recept/embeddinggemma-300m.args`).
 Klienten sätter själv prefixen `task: code retrieval | query: …` och
 `title: none | text: …`; `./steg/20-embed-test.sh` kontrollerar dimension och
