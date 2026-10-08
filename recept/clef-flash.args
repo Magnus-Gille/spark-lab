@@ -1,0 +1,8 @@
+# Kandidat D: Cloudflare/clef-flash (9B, Apache-2.0), beslutsmodell i Jev-stil.
+# Utgangslage: modellkortet sager bara "vllm serve"; beslutshuvudet ar egen kod
+# (--trust-remote-code). Otestat. Liten kontext racker for beslut.
+--trust-remote-code
+--gpu-memory-utilization 0.3
+--max-model-len 16384
+--max-num-seqs 8
+--enable-prefix-caching

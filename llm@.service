@@ -1,0 +1,21 @@
+[Unit]
+Description=Lokal LLM-inferens, instans %i
+After=docker.service
+Requires=docker.service
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+# Instans %i: /etc/llm/%i.env (egen LLM_PORT och nyckel) och /etc/llm/%i.args
+# (egen --gpu-memory-utilization). Container heter llm-%i.
+Environment=LLM_ENV=/etc/llm/%i.env
+Environment=LLM_ARGS=/etc/llm/%i.args
+Environment=LLM_CONTAINER=llm-%i
+ExecStart=/usr/local/lib/llm/start.sh
+ExecStop=/usr/bin/docker stop -t 30 llm-%i
+TimeoutStopSec=60
+Restart=no
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

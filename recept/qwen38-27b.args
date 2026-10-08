@@ -1,0 +1,23 @@
+# Kandidat B: nvidia/Qwen3.8-27B-NVFP4 pa en DGX Spark (Apache-2.0, ca 20 GiB).
+# Utgangslage: NVIDIA:s egen Spark-playbook for vLLM (bild vllm/vllm-openai:qwen38),
+#   https://build.nvidia.com/spark/vllm  (skriptet sync-vllm-single-spark.sh)
+# Playbooken satter --max-num-seqs 8; sankt till 4 har for mindre KV-tryck.
+# Sank --max-model-len till det behov som finns: mindre kontext = fler samtidiga anvandare.
+# Samma recept fungerar for unsloth/Qwen3.8-27B-NVFP4 (forumtrad 380244), men
+# kontrollera tokenizer truncation med ./diag.sh tokenizer.
+--tensor-parallel-size 1
+--kv-cache-dtype fp8
+--gpu-memory-utilization 0.7
+--max-model-len 262144
+--max-num-seqs 4
+--max-num-batched-tokens 8192
+--enable-chunked-prefill
+--async-scheduling
+--enable-prefix-caching
+--load-format fastsafetensors
+--reasoning-parser qwen3
+--tool-call-parser qwen3_xml
+--enable-auto-tool-choice
+# Spekulativ avkodning (MTP): matt 2026-10-08 pa en Spark, 28,9 tok/s per strom
+# med mot 13,0 utan vid tom kontext; 24,0 mot 12,3 vid 32k; 10,7 mot 7,1 vid 4 strommar.
+--speculative-config {"method":"mtp","num_speculative_tokens":3}

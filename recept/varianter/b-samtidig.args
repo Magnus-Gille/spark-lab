@@ -1,0 +1,15 @@
+# Variant B-samtidig (med MTP, som baslinjen): mer KV-cache och fler samtidiga strommar (flera utvecklare).
+--tensor-parallel-size 1
+--kv-cache-dtype fp8
+--gpu-memory-utilization 0.8
+--max-model-len 131072
+--max-num-seqs 8
+--max-num-batched-tokens 16384
+--enable-chunked-prefill
+--async-scheduling
+--enable-prefix-caching
+--load-format fastsafetensors
+--reasoning-parser qwen3
+--tool-call-parser qwen3_xml
+--enable-auto-tool-choice
+--speculative-config {"method":"mtp","num_speculative_tokens":3}

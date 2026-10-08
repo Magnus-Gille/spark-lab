@@ -1,0 +1,6 @@
+# Reserv for F: google/embeddinggemma-300m (Gemma-licens, text, 2048 tokens, 768 dim).
+# Stods av vLLM sedan lange (Gemma3TextModel), fungerar pa den vanliga bilden.
+--runner pooling
+--max-model-len 2048
+--gpu-memory-utilization 0.05
+--max-num-seqs 32

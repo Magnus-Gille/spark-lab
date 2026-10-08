@@ -1,0 +1,7 @@
+# Kandidat E: Cloudflare/clef (27B, Apache-2.0), beslutsmodell i Jev-stil.
+# Utgangslage: modellkortet sager bara "vllm serve"; beslutshuvudet ar egen kod. Otestat.
+--trust-remote-code
+--gpu-memory-utilization 0.6
+--max-model-len 16384
+--max-num-seqs 8
+--enable-prefix-caching

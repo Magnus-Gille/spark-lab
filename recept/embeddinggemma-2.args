@@ -1,0 +1,12 @@
+# Kandidat F: google/embeddinggemma-2 (744M, Apache-2.0), embeddingmodell for sokning
+# i kod och text. 768 dimensioner (Matryoshka 512/256/128), 8192 tokens, 100+ sprak.
+# Kraver vLLM nyare an 0.31.0 (stodet gick in 2026-10-06): bild
+# vllm/vllm-openai:cu134-nightly-81198e97ba7eee2a22540caaa756b7fdddcb4d93 (arm64, 2026-10-08).
+# Kors som sidomodell (llm@embed, port 8002) bredvid kodmodellen: ca 0,5 GiB minne.
+# Klienten satter prefix sjalv: "task: code retrieval | query: ..." for fragor,
+# "title: none | text: ..." for dokument. Otestat.
+--runner pooling
+--max-model-len 8192
+--limit-mm-per-prompt {"image":0,"audio":0,"video":0}
+--gpu-memory-utilization 0.05
+--max-num-seqs 32

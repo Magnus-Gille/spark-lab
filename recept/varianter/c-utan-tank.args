@@ -1,0 +1,22 @@
+# Variant C-utan-tank: modellkortets Spark-recept for C med tankande AV som
+# serverstandard. Klienter kan sla pa det per anrop med
+# "chat_template_kwargs": {"enable_thinking": true}. Rekommenderad grund for
+# kodverktyg: svar pa under en sekund, ingen risk att resonemanget ater upp max_tokens.
+--tensor-parallel-size 1
+--trust-remote-code
+--kv-cache-dtype fp8
+--attention-backend flashinfer
+--moe-backend marlin
+--gpu-memory-utilization 0.5
+--max-model-len 262144
+--max-num-seqs 16
+--max-num-batched-tokens 16384
+--enable-chunked-prefill
+--async-scheduling
+--enable-prefix-caching
+--speculative-config {"method":"mtp","num_speculative_tokens":3,"moe_backend":"triton"}
+--load-format fastsafetensors
+--reasoning-parser qwen3
+--tool-call-parser qwen3_xml
+--enable-auto-tool-choice
+--default-chat-template-kwargs {"enable_thinking":false}

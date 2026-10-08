@@ -1,0 +1,25 @@
+[Unit]
+Description=Lokal LLM-inferens
+After=docker.service
+Requires=docker.service
+# Frekvensgrans for starter (gall bara om Restart slas pa nedan). Aterstall med:
+#   sudo systemctl reset-failed llm && sudo systemctl start llm
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+# start.sh tar sjalv bort en gammal container med namnet llm, men bara om den
+# bar etiketten spark-lab (dvs. ar var egen).
+ExecStart=/usr/local/lib/llm/start.sh
+ExecStop=/usr/bin/docker stop -t 30 llm
+TimeoutStopSec=60
+# Ingen automatisk omstart under labbdagen: varje misslyckad start kostar en
+# modelladdning (minuter) och en frekvensgrans stoppar inte langsamma slingor.
+# Nar konfigurationen ar fryst och provad kan kunden valja Restart=on-failure.
+Restart=no
+RestartSec=30
+# "active" betyder att containern kor, inte att API:et ar redo. Kontrollera med
+# ./diag.sh eller curl http://127.0.0.1:8000/health
+
+[Install]
+WantedBy=multi-user.target

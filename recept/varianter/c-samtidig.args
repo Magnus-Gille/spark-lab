@@ -1,0 +1,21 @@
+# Variant C-samtidig: modellkortets Spark-recept for C med fler samtidiga strommar.
+# Kapacitet matt 2026-10-08: C behover 12,7 kB KV per token, sa 0.5 minne ger
+# ca 2,5 M tokens KV: 16 anvandare med 128k var, eller 75 med 32k. Otestad.
+# Byt med: ./steg/10-variant.sh c-samtidig
+--tensor-parallel-size 1
+--trust-remote-code
+--kv-cache-dtype fp8
+--attention-backend flashinfer
+--moe-backend marlin
+--gpu-memory-utilization 0.5
+--max-model-len 262144
+--max-num-seqs 16
+--max-num-batched-tokens 16384
+--enable-chunked-prefill
+--async-scheduling
+--enable-prefix-caching
+--speculative-config {"method":"mtp","num_speculative_tokens":3,"moe_backend":"triton"}
+--load-format fastsafetensors
+--reasoning-parser qwen3
+--tool-call-parser qwen3_xml
+--enable-auto-tool-choice

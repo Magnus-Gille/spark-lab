@@ -1,0 +1,16 @@
+# Variant B-prefill (med MTP, som baslinjen): som B men storre prefill-bitar for snabbare forsta token pa
+# langa prompter (kanariefageln gav ca 770 tok/s prefill med 8192).
+--tensor-parallel-size 1
+--kv-cache-dtype fp8
+--gpu-memory-utilization 0.7
+--max-model-len 262144
+--max-num-seqs 4
+--max-num-batched-tokens 32768
+--enable-chunked-prefill
+--async-scheduling
+--enable-prefix-caching
+--load-format fastsafetensors
+--reasoning-parser qwen3
+--tool-call-parser qwen3_xml
+--enable-auto-tool-choice
+--speculative-config {"method":"mtp","num_speculative_tokens":3}
