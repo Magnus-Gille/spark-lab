@@ -8,8 +8,9 @@
 --runner pooling
 # Standardvalet (Triton-attention) kraver 160 kB delat minne per block; GB10 har 99 kB
 # ("triton OutOfResources: shared memory, Required 163840, Hardware limit 101376").
-# FlashInfer fungerar pa GB10 (samma som receptet for C).
---attention-backend flashinfer
+# FlashInfer stoder inte encoder-only (dubbelriktad) attention som embeddingmodeller
+# anvander ("AttentionType.ENCODER_ONLY not supported"). FlashAttention stoder det.
+--attention-backend flash_attn
 --max-model-len 8192
 --limit-mm-per-prompt {"image":0,"audio":0,"video":0}
 --gpu-memory-utilization 0.05
