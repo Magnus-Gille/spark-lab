@@ -30,6 +30,7 @@ De här går att skriva för hand om nätet eller `git clone` inte fungerar.
 
 | Symptom | Kommando | Leta efter |
 | --- | --- | --- |
+| `[ERROR] min_frames is part of Qwen3VLVideoProcessorInitKwargs, but not documented` | ingen | Ofarligt: ett dokumentationsfel i modellens bildprocessor (C har en VL-del) som loggas som ERROR. Tjänsten startar ändå; vänta på "Application startup complete" |
 | Tjänsten dör direkt efter start | `./diag.sh fel 300 \| head -n 60` | Första tracebacken, inte den sista. `Restart=no` som levererat: starta om för hand med `sudo systemctl start llm` när felet är rättat |
 | "Killed" eller slut på minne vid start | `./diag.sh minne`, sedan `./diag.sh cache` | Hög `buff/cache`. Hjälper det inte: sänk `--gpu-memory-utilization` |
 | Okänd flagga (`unrecognized arguments`) | `./diag.sh konf` | Flaggan finns inte i den här bildens vLLM-version. Jämför med receptets bild |
