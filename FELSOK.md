@@ -34,6 +34,7 @@ De här går att skriva för hand om nätet eller `git clone` inte fungerar.
 | "Killed" eller slut på minne vid start | `./diag.sh minne`, sedan `./diag.sh cache` | Hög `buff/cache`. Hjälper det inte: sänk `--gpu-memory-utilization` |
 | Okänd flagga (`unrecognized arguments`) | `./diag.sh konf` | Flaggan finns inte i den här bildens vLLM-version. Jämför med receptets bild |
 | `KV cache` räcker inte för `max_model_len` | `./diag.sh logg` | Raden om KV-cache. Sänk `--max-model-len` eller höj minnesandelen |
+| `OutOfResources: shared memory, Required ... Hardware limit 101376` | `./steg/23-embed-fel.sh` | En Triton-kärna vill ha mer delat minne än GB10:s 99 kB per block. Sätt `--attention-backend flashinfer` i receptet (eller sänk `--max-num-batched-tokens`) |
 | Krasch med NVFP4 eller `no kernel image` | `./diag.sh logg` | Bilden saknar stöd för GB10. Byt till en bild från NVIDIA:s Spark-playbook (`vllm/vllm-openai:qwen38`) eller en bild byggd för Sparken |
 | `har id ... men llm.env kräver ...` | `./diag.sh konf` | Fel bild bakom taggen. Läs in den sparade filen igen eller uppdatera `LLM_IMAGE_ID` medvetet |
 | GPU:n syns inte i containern | `./diag.sh gputest` | Ska visa samma GPU som på värden. Annars saknas NVIDIA-runtime i Docker |

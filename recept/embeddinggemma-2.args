@@ -6,6 +6,10 @@
 # Klienten satter prefix sjalv: "task: code retrieval | query: ..." for fragor,
 # "title: none | text: ..." for dokument. Otestat.
 --runner pooling
+# Standardvalet (Triton-attention) kraver 160 kB delat minne per block; GB10 har 99 kB
+# ("triton OutOfResources: shared memory, Required 163840, Hardware limit 101376").
+# FlashInfer fungerar pa GB10 (samma som receptet for C).
+--attention-backend flashinfer
 --max-model-len 8192
 --limit-mm-per-prompt {"image":0,"audio":0,"video":0}
 --gpu-memory-utilization 0.05
