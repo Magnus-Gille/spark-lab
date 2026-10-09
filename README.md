@@ -292,7 +292,7 @@ Mätt 2026-10-08 på C med tre små Python-uppgifter: tänkande på gav 2 av 3
 godkända på 235 s (den tredje fastnade i resonemang); tänkande av gav 3 av 3 på
 5 s. Tumregel: tänkande av som standard, på för uppgifter där användaren är
 beredd att vänta en minut på ett bättre svar. Sätt alltid `max_tokens` så att det finns plats
-för resonemanget när tänkande är på (8 000 till 32 000), annars blir svaret tomt.
+för resonemanget när tänkande är på (minst 16 000; 8 000 räckte inte i eval-exemplet, `eval.py` använder 24 000), annars blir svaret tomt.
 `rok.py --utan-tank`, `bench.py --utan-tank` och `eval.py --utan-tank` mäter med
 tänkande av; kolumnen `tank` i resultatfilerna visar vilket som gällde.
 

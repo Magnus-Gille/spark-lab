@@ -137,8 +137,11 @@ samma skript. Varje instans behöver egen port och egen minnesandel. Det är
 - Verifieringen är fail-closed: saknat manifest, saknad `.kalla` eller en ofryst
   konfiguration är FEL, inte "inga avvikelser". `start.sh` och `hamta.sh` stoppar
   hellre än gissar.
-- Allt som ändrar maskinen visar sin plan och frågar `[j/N]`; bara `j` räknas som
-  ja. `JA=1` hoppar över frågan för obevakad körning.
+- Momenten i `steg/` som ändrar maskinen, och `byt-modell.sh`, visar sin plan och
+  frågar `[j/N]`; bara `j` räknas som ja. `JA=1` hoppar över frågan i
+  `byt-modell.sh` och `steg/10-variant.sh` (och därmed i `steg/11-batch.sh`);
+  `steg/04`, `07`, `16` och `21` frågar men saknar `JA=1`. `install.sh` och
+  `verifiera.sh frys` frågar inte.
 - API:et lyssnar på `127.0.0.1` om inte `LLM_BIND` ändras. Trafiken är okrypterad
   HTTP.
 - `--trust-remote-code` i ett recept betyder att modellens egen Python-kod körs i

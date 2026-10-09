@@ -55,7 +55,7 @@ curl -s http://<spark>:8000/v1/chat/completions \
 | --- | --- | --- |
 | Bas-URL | `http://<spark>:8000/v1` | de flesta klienter vill ha `/v1` med |
 | Modell | `kod` | fast namn, se ovan |
-| `max_tokens` | 8 000 till 32 000 för kodarbete | Qwen3 tänker först (fältet `reasoning`) och svarar sedan; ett lågt tak ger tomt svar med `finish_reason: length` |
+| `max_tokens` | 16 000 till 32 000 för kodarbete med tänkande på (8 000 räckte inte i eval-exemplet); 2 000 till 8 000 med tänkande av | Qwen3 tänker först (fältet `reasoning`) och svarar sedan; ett lågt tak ger tomt svar med `finish_reason: length` |
 | Tänkande av | `"chat_template_kwargs": {"enable_thinking": false}` i anropet | se avsnittet "Tänkande: på eller av" i README. Kort: av ger svar på under en sekund, på ger bättre svar på svåra uppgifter men kan ta minuter och kan fastna. Kontrollera med Sparkens ansvarige vad servern har som standard |
 | Kontext | upp till 262 144 tokens per anrop | mer kontext per användare = färre samtidiga användare, se "Kapacitet" i README |
 | `temperature` | 0 till 0,7 | 0 för reproducerbara svar (med spekulativ avkodning varierar texten ändå något) |
