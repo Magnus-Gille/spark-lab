@@ -31,7 +31,7 @@ VISA=0; [[ "${1:-}" == "--visa" ]] && VISA=1
 [[ -f "/srv/models/$LLM_MODEL_DIR.kalla" && -f "/srv/models/$LLM_MODEL_DIR.sha256" ]] \
   || { echo "Modellen $LLM_MODEL_DIR ar inte fardigstalld (saknar .kalla/.sha256 fran hamta.sh)" >&2; exit 1; }
 
-# Bilden ska finnas lokalt (ingen pull vid start) och, om LLM_IMAGE_ID ar satt,
+# Bilden ska finnas lokalt (ingen pull vid start) och, LLM_IMAGE_ID ar obligatoriskt,
 # vara exakt den bild som frystes med bild.sh. Id overlever docker save/load,
 # till skillnad fran digesten.
 if ! ID_NU="$(docker image inspect "$LLM_IMAGE" --format '{{.Id}}' 2>/dev/null)"; then
