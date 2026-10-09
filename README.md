@@ -4,15 +4,16 @@ Skript för att sätta upp, mäta och frysa lokal LLM-inferens (vLLM i Docker) p
 NVIDIA DGX Spark. Allt är avsett att läsas innan det körs. Inga hemligheter eller
 kunduppgifter hör hemma i det här repot: API-nyckeln skapas på maskinen.
 
-Status 2026-10-08: hela flödet för kandidat B (hämta, spara bild, installera,
-starta, röktest, mätning, frysning) är kört på en riktig DGX Spark med DGX OS 7.2
-och `vllm/vllm-openai:qwen38`; siffrorna i dokumentationen kommer därifrån.
-Kandidat C, varianterna och eval-exemplet körs i en obevakad serie samma dag.
-Recepten för A, D och E är utgångslägen från playbook, modellkort och forumtrådar
-och är inte provade. Skripten är dessutom testade i en Linux-container med
-låtsade `docker`, `hf` och `systemd`, och Python-skripten mot en låtsasserver.
-Repot har granskats i två rundor av en fristående modell; det som inte är
-åtgärdat står under "Kända begränsningar".
+Status 2026-10-08: hela flödet (hämta, spara bild, installera, starta, röktest,
+mätning, frysning) är kört för både kandidat B och kandidat C på en riktig DGX
+Spark med DGX OS 7.2; siffrorna i dokumentationen kommer därifrån. C är den
+frysta leveransen, med receptet `recept/varianter/c-utan-tank.args`; B ligger
+kvar som alternativ. D och E är hämtade men inte startade. F är hämtad men inte
+igång (se avsnittet om kandidaterna). A är inte hämtad; dess recept är ett
+utgångsläge från forumtrådar och inte provat. Skripten är dessutom testade i en
+Linux-container med låtsade `docker`, `hf` och `systemd`, och Python-skripten
+mot en låtsasserver. Repot har granskats i två rundor av en fristående modell;
+det som inte är åtgärdat står under "Kända begränsningar".
 
 ## Ordlista
 
@@ -45,6 +46,7 @@ Repot har granskats i två rundor av en fristående modell; det som inte är
 | `eval/README.md` | hur kundens egna uppgifter skrivs och körs som kvalitetsmått |
 | `docs/kolumner.md` | varje kolumn i `bench.csv` och `eval.csv` |
 | `docs/anvanda-api.md` | använda API:et från andra datorer: öppna porten, nyckel, inställningar, exempel per klient |
+| `docs/repot.md` | hur repot är byggt och hur man ändrar det: lager, flöde till maskinen, spårbarhet, konventioner |
 | filhuvudena | varje skript börjar med vad det gör, hur det anropas och om det ändrar något |
 
 Konventioner: svenska utan diakritiska tecken i skript och utskrifter (säkrare i
@@ -415,8 +417,8 @@ som gällde när de skrevs.
 
 ## Kända begränsningar
 
-- Bara kandidat B är körd på en riktig Spark; A, D och E är utgångslägen. En ny
-  vLLM-bild kan byta flaggnamn: kör `./rok.py` efter varje bildbyte.
+- B och C är körda på en riktig Spark; A, D och E är utgångslägen och F är inte
+  igång. En ny vLLM-bild kan byta flaggnamn: kör `./rok.py` efter varje bildbyte.
 - `--varm` antar att prefixcachen träffar efter uppvärmningen; räknarna i
   `./diag.sh matvarden` (`prefix_cache_hits`) visar om det stämmer.
 - Kanariefågeln larmar vid klippning över ca 5 % och vid tappade kodord; den
